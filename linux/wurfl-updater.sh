@@ -33,7 +33,6 @@ else
     # BSD Date
     LAST_DATE=$(stat -f "%Sm" -t "%a, %d %b %Y %T %z" "$WURFL_PATH" 2>/dev/null || date -u -j -v -1w "+%a, %d %b %Y %T %z")
 fi
-echo $LAST_DATE
 
 if [ "x$CURL" != "x" ]; then
     # Use cURL method
