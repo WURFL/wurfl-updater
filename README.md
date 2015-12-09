@@ -26,7 +26,7 @@ To download or update your WURFL file, pass the WURFL Snapshot URL from your cus
 When you run the updater, if there is not a local copy of the file, the file is downloaded.  If there is a local copy of the file but it is out of date, the updated version is downloaded, otherwise nothing is downloaded.
 
 ### Requirements
-This script should run on must UNIX-like systems with no additional packages, however, you will need `curl` or `wget`, as well as `date`, `grep` and `stat`.
+This script should run on must UNIX-like systems with no additional packages, however, you will need `curl` or `wget`, as well as `date`, `grep`, `basename` and `stat`.
 
 ### Examples
 
