@@ -32,7 +32,7 @@ if date --version 2>&1 | grep GNU > /dev/null 2>&1; then
     LAST_DATE=$(date -r "$WURFL_PATH" --utc "$DATE_FORMAT" 2>/dev/null || date --utc --date='1 week ago' "$DATE_FORMAT")
 else
     # BSD Date
-    LAST_DATE=$(TX= stat -f "%Sm" -t "$DATE_FORMAT" "$WURFL_PATH" 2>/dev/null || date -ujv -1w "$DATE_FORMAT")
+    LAST_DATE=$(TZ= stat -f "%Sm" -t "$DATE_FORMAT" "$WURFL_PATH" 2>/dev/null || date -ujv -1w "$DATE_FORMAT")
 fi
 
 if [ "x$CURL" != "x" ]; then
