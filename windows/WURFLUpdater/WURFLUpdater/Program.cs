@@ -30,8 +30,8 @@ namespace WURFLUpdater
             }
 
             String remoteUrl = args[0];
-            String localDir = args[1];
-            String localFileName = localDir + remoteUrl.Split('/').Last();
+            String localDir = args[1].TrimEnd('\\','/');
+            String localFileName = localDir + Path.DirectorySeparatorChar + remoteUrl.Split('/').Last();
             DateTime lastModified = File.Exists(localFileName) ? File.GetLastWriteTime(localFileName) : DateTime.Now.AddDays(-7.0);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(remoteUrl);
             request.Timeout = 10000;
