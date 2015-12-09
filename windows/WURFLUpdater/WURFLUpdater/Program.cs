@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 
@@ -11,14 +12,33 @@ namespace WURFLUpdater
     {
         static void Main(string[] args)
         {
-            string remoteUrl = "https://data.scientiamobile.com/xxxxx/wurfl.zip";
-            string localFileName = @"C:\temp\wurfl.zip";
+
+            if (args.Length != 2)
+            {
+                Console.Error.WriteLine("ScientiaMobile WURFL Snapshot Updater");
+                Console.Error.WriteLine("This utility is used to update the WURFL.xml device database file.");
+                Console.Error.WriteLine("Note that the file format (zip or xml.gz) is determined by the URL.");
+                Console.Error.WriteLine("");
+                Console.Error.WriteLine("usage: ./wurfl-updater.exe <url> <download_path>");
+                Console.Error.WriteLine("  url            The WURFL Snapshot URL from your customer vault on scientiamobile.com");
+                Console.Error.WriteLine("                 ex: https://data.scientiamobile.com/xxxxx/wurfl.zip");
+                Console.Error.WriteLine("");
+                Console.Error.WriteLine("  download_path  The directory to place the WURFL file into.");
+                Console.Error.WriteLine("");
+                Environment.Exit(1);
+                
+            }
+
+            String remoteUrl = args[0];
+            String localDir = args[1];
+            String localFileName = localDir + remoteUrl.Split('/').Last();
             DateTime lastModified = File.Exists(localFileName) ? File.GetLastWriteTime(localFileName) : DateTime.Now.AddDays(-7.0);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(remoteUrl);
             request.Timeout = 10000;
             request.AllowWriteStreamBuffering = false;
-            request.UserAgent = "WURFL Downloader/dotNet";
+            request.UserAgent = "WURFL Updater/dotNet";
             request.IfModifiedSince = lastModified;
+            
             Console.WriteLine("Downloading WURFL file...");
 
             try
@@ -44,13 +64,25 @@ namespace WURFLUpdater
                 if (e.Response != null)
                 {
                     if (((HttpWebResponse)e.Response).StatusCode == HttpStatusCode.NotModified)
+                    {
                         Console.WriteLine("The WURFL File is up to date.");
+                    }
                     else
-                        Console.WriteLine("Unexpected status code = " + ((HttpWebResponse)e.Response).StatusCode);
+                    {
+                        Console.Error.WriteLine("Unexpected status code: HTTP {0}: {1}",
+                            (int)((HttpWebResponse)e.Response).StatusCode,
+                            ((HttpWebResponse)e.Response).StatusDescription
+                        );
+                        Environment.Exit(2);
+                    }
                 }
                 else
-                    Console.WriteLine("Unexpected Web Exception " + e.Message); 
+                {
+                    Console.Error.WriteLine("Unexpected Web Exception " + e.Message);
+                    Environment.Exit(3);
+                }
             }
         }
     }
 }
+
