@@ -48,20 +48,17 @@ For Windows users there is a Visual Studio project that can be used to generate 
 ### Examples
 
 	# Success
-    C:\temp\WURFLUpdater.exe https://data.scientiamobile.com/xxxxx/wurfl.zip c:
-    \temp
+    C:\temp\WURFLUpdater.exe https://data.scientiamobile.com/xxxxx/wurfl.zip c:\temp
     Downloading WURFL file...
     Successfully downloaded WURFL to: c:\temp\wurfl.zip
 
 	# File is already up-to-date
-    C:\temp\WURFLUpdater.exe https://data.scientiamobile.com/xxxxx/wurfl.zip c:
-    \temp
+    C:\temp\WURFLUpdater.exe https://data.scientiamobile.com/xxxxx/wurfl.zip c:\temp
     Downloading WURFL file...
     The WURFL File is up to date.
 
 	# URL or License is invalid
-    C:\temp\WURFLUpdater.exe https://data.scientiamobile.com/xxxxx/wurfl.zip c:
-    \temp
+    C:\temp\WURFLUpdater.exe https://data.scientiamobile.com/xxxxx/wurfl.zip c:\temp
     Downloading WURFL file...
     Unexpected status code: HTTP 402: Payment Required
 
