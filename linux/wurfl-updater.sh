@@ -23,15 +23,16 @@ WURFL_DIR="$2"
 
 WURFL_FILE=$(basename "$SNAPSHOT_URL")
 WURFL_PATH="$WURFL_DIR/$WURFL_FILE"
+DATE_FORMAT="+%a, %d %b %Y %T GMT"
 CURL=$(which curl 2> /dev/null)
 WGET=$(which wget 2> /dev/null)
 
 if date --version 2>&1 | grep GNU > /dev/null 2>&1; then
     # GNU Date
-    LAST_DATE=$(date -r "$WURFL_PATH" --utc --rfc-2822 2>/dev/null || date --utc --rfc-2822 --date='1 week ago')
+    LAST_DATE=$(date -r "$WURFL_PATH" --utc "$DATE_FORMAT" 2>/dev/null || date --utc --date='1 week ago' "$DATE_FORMAT")
 else
     # BSD Date
-    LAST_DATE=$(stat -f "%Sm" -t "%a, %d %b %Y %T %z" "$WURFL_PATH" 2>/dev/null || date -u -j -v -1w "+%a, %d %b %Y %T %z")
+    LAST_DATE=$(TX= stat -f "%Sm" -t "$DATE_FORMAT" "$WURFL_PATH" 2>/dev/null || date -ujv -1w "$DATE_FORMAT")
 fi
 
 if [ "x$CURL" != "x" ]; then
