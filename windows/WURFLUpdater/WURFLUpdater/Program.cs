@@ -1,10 +1,13 @@
-﻿using System;
+﻿//using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Net;
+// using System.Linq;
+using System.Text;
+// using System.Threading.Tasks;
+//using System.IO;
+//using System.Net;
 
 namespace WURFLUpdater
 {
@@ -31,7 +34,10 @@ namespace WURFLUpdater
 
             String remoteUrl = args[0];
             String localDir = args[1].TrimEnd('\\','/');
-            String localFileName = localDir + Path.DirectorySeparatorChar + remoteUrl.Split('/').Last();
+            var splitted = remoteUrl.Split('/');
+            var splittedLast = splitted[splitted.Length -1 ];
+            // String localFileName = localDir + Path.DirectorySeparatorChar + remoteUrl.Split('/').Last();
+            String localFileName = localDir + Path.DirectorySeparatorChar + splittedLast;
             DateTime lastModified = File.Exists(localFileName) ? File.GetLastWriteTime(localFileName) : DateTime.Now.AddDays(-7.0);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(remoteUrl);
             request.Timeout = 10000;
