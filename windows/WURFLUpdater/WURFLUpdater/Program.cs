@@ -29,11 +29,13 @@ namespace WURFLUpdater
 
             String remoteUrl = args[0];
             String localDir = args[1].TrimEnd('\\','/');
-            // avoid using LinQ:
+            // avoid using LinQ (not available in older .NET versions):
             // String localFileName = localDir + Path.DirectorySeparatorChar + remoteUrl.Split('/').Last();
-            var splitted = remoteUrl.Split('/');
-            var splittedLast = splitted[splitted.Length - 1];
-            String localFileName = localDir + Path.DirectorySeparatorChar + splittedLast;
+            String[] splittedRemoteUrl = remoteUrl.Split('/');
+            String splittedRemoteUrlLast = splittedRemoteUrl[splittedRemoteUrl.Length - 1];
+            String localFileName = localDir + Path.DirectorySeparatorChar + splittedRemoteUrlLast;
+            // make Bash happy
+            localFileName = localFileName.Replace("\\", "/");
             DateTime lastModified = File.Exists(localFileName) ? File.GetLastWriteTime(localFileName) : DateTime.Now.AddDays(-7.0);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(remoteUrl);
             request.Timeout = 10000;
@@ -41,7 +43,7 @@ namespace WURFLUpdater
             request.UserAgent = "WURFL Updater/dotNet";
             request.IfModifiedSince = lastModified;
             
-            Console.WriteLine("Downloading WURFL file...");
+            Console.WriteLine("Downloading WURFL file in {0}...", localFileName);
 
             try
             {
@@ -83,6 +85,15 @@ namespace WURFLUpdater
                     Console.Error.WriteLine("Unexpected Web Exception " + e.Message);
                     Environment.Exit(3);
                 }
+            }
+            // add some human-readable error message
+            catch (UnauthorizedAccessException e)
+            {
+                Console.Error.WriteLine("Error: {0}\nPlease try to download into a directory on which you have write permissions.", e.Message);
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Console.Error.WriteLine("Error: {0}\nPlease try to download into an existant directory.", e.Message);
             }
         }
     }
