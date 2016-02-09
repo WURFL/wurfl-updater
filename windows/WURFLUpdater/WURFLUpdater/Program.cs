@@ -34,8 +34,6 @@ namespace WURFLUpdater
             String[] splittedRemoteUrl = remoteUrl.Split('/');
             String splittedRemoteUrlLast = splittedRemoteUrl[splittedRemoteUrl.Length - 1];
             String localFileName = localDir + Path.DirectorySeparatorChar + splittedRemoteUrlLast;
-            // make Bash happy
-            localFileName = localFileName.Replace("\\", "/");
             DateTime lastModified = File.Exists(localFileName) ? File.GetLastWriteTime(localFileName) : DateTime.Now.AddDays(-7.0);
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(remoteUrl);
             request.Timeout = 10000;
