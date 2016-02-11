@@ -43,7 +43,9 @@ This script should run on must UNIX-like systems with no additional packages, ho
 
 ## Windows
 
-For Windows users there is a Visual Studio project that can be used to generate the updater `exe` file.  This program will work exactly the same way as the Linux script, with the same command-line arguments.
+Windows users may download a the updated as an `exe` file that is available for download from [here](https://github.com/WURFL/wurfl-updater/releases]),
+which can also be generated using the Visual Studio project located under the `windows/WURFLUpdater` directory of this repository. This program will work
+exactly the same way as the Linux script, with the same command-line arguments.
 
 ### Examples
 
