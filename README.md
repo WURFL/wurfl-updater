@@ -1,3 +1,10 @@
+# IMPORTANT NOTE: July 2023
+
+This tool is outdated and no longer supported. ScientiaMobile reserves the right to remove it without notice. Please note how all the WURFL Products come
+with a built-in WURFL updater feature that will update the `wurfl.xml` file with the most recent version in the
+user's customer vault: [https://www.scientiamobile.com/update-api-xml-device-detection/](https://www.scientiamobile.com/update-api-xml-device-detection/)
+--------------------
+
 # wurfl-updater
 Utilities for updating the ScientiaMobile WURFL device database file (WURFL.xml).
 
